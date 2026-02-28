@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.jspecify.annotations.NullMarked;
 import org.mongodb.springboot.kitchensinkmordernization.enums.MemberRole;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,9 +30,11 @@ public class Member implements UserDetails {
     private Long id;
 
     @Field("name")
+    @Indexed(unique = true)
     private String name;
 
     @Field("email")
+    @Indexed(unique = true)
     private String email;
 
     @Field("phone_number")

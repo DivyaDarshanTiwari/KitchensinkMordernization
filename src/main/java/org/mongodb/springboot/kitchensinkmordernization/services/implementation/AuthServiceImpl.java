@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -41,8 +42,10 @@ public class AuthServiceImpl implements AuthService {
         return new LoginResponseDto(token, member.getId());
     }
 
+    @Transactional
     public void signUp(MemberDTO memberDTO) {
         Member member = mapperConfig.mapMemberDTOToMember(memberDTO);
+
         Long sequence = sequenceGeneratorRepository.generateSequenceByName("members");
         member.setId(sequence);
         member.setPhoneNumber(memberDTO.getPhoneNumber());
