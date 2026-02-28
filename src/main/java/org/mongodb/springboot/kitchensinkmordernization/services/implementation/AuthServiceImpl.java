@@ -30,12 +30,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword()) );
+                new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword()));
         Member member = (Member) authentication.getPrincipal();
 
         assert member != null;
         String token = authUtil.generateJwtToken(member);
-        return new LoginResponseDto(token,member.getId());
+        return new LoginResponseDto(token, member.getId());
     }
 
     public void signUp(MemberDTO memberDTO) {
