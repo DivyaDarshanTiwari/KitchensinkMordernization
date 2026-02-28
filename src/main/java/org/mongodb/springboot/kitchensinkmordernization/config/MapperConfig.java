@@ -10,6 +10,9 @@ import org.mongodb.springboot.kitchensinkmordernization.entites.Member;
 public interface MapperConfig {
 
     MemberDTO mapMemberToMemberDTO(Member member);
+
     @Mapping(target="id",ignore = true)
+    @Mapping(target="role",ignore = true)
     Member mapMemberDTOToMember(MemberDTO memberDTO);
+
 }
