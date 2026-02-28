@@ -33,6 +33,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**")
                         .permitAll()
+                        .requestMatchers("/members/{id}").hasAnyRole("MEMBER", "ADMIN")
+                        .requestMatchers("/members").hasRole("ADMIN")
                         .anyRequest()
                         .authenticated()
                 )

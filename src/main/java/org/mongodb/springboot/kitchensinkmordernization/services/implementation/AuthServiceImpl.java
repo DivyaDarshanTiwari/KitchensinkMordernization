@@ -6,6 +6,7 @@ import org.mongodb.springboot.kitchensinkmordernization.dto.LoginRequestDto;
 import org.mongodb.springboot.kitchensinkmordernization.dto.LoginResponseDto;
 import org.mongodb.springboot.kitchensinkmordernization.dto.MemberDTO;
 import org.mongodb.springboot.kitchensinkmordernization.entites.Member;
+import org.mongodb.springboot.kitchensinkmordernization.enums.MemberRole;
 import org.mongodb.springboot.kitchensinkmordernization.repositories.MemberRepository;
 import org.mongodb.springboot.kitchensinkmordernization.repositories.custom.SequenceGeneratorRepository;
 import org.mongodb.springboot.kitchensinkmordernization.security.AuthUtil;
@@ -15,6 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +46,7 @@ public class AuthServiceImpl implements AuthService {
         Long sequence = sequenceGeneratorRepository.generateSequenceByName("members");
         member.setId(sequence);
         member.setPhoneNumber(memberDTO.getPhoneNumber());
+        member.setRole(Set.of(MemberRole.MEMBER));
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         memberRepository.save(member);
     }
