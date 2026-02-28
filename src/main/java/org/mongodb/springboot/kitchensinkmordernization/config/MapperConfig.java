@@ -9,6 +9,7 @@ import org.mongodb.springboot.kitchensinkmordernization.entites.Member;
 @Mapper(componentModel = "spring")
 public interface MapperConfig {
 
+    @Mapping(target="password",ignore = true)
     MemberDTO mapMemberToMemberDTO(Member member);
 
     @Mapping(target="id",ignore = true)
