@@ -26,13 +26,20 @@ public class WebSecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
 
+    private final String[] whiteListedUrl ={
+            "/auth/**",
+            "/swagger-ui/**",
+            "/v3/api-docs"
+    };
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, HandlerExceptionResolver handlerExceptionResolver) {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**")
+                        .requestMatchers(whiteListedUrl)
                         .permitAll()
                         .requestMatchers("/members/{id}").hasAnyRole("MEMBER", "ADMIN")
                         .requestMatchers("/members").hasRole("ADMIN")
