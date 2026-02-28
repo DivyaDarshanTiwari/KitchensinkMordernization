@@ -59,5 +59,5 @@ public class Member implements UserDetails {
     @NullMarked
     public String getUsername() {
         return name;
-    }
+    } //as we have name in the database, UserDetails uses this method to get the name of the user as it uses username field
 }
