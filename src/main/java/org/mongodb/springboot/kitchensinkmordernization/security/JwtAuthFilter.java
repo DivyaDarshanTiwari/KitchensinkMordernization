@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 
@@ -23,10 +24,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final MemberRepository memberRepository;
     private final AuthUtil authUtil;
+    private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        log.info("Request URI : {}", request.getRequestURI());
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain ) throws ServletException, IOException {
+        try {
+            log.info("Request URI : {}", request.getRequestURI());
             String authenticationHeader = request.getHeader("Authorization");
             if (authenticationHeader != null && !authenticationHeader.startsWith("Bearer ")) {
                 filterChain.doFilter(request, response);
@@ -44,5 +47,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
 
             filterChain.doFilter(request, response);
+        }catch (Exception ex){
+            handlerExceptionResolver.resolveException(request, response, null, ex);
+        }
     }
+
 }
