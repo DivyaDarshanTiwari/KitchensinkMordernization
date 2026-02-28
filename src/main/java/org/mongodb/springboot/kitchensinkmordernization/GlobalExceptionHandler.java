@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiError> handleAccessDeniedException(AccessDeniedException ex) {
-        ApiError apiError = new ApiError("Access denied: Insufficient permissions", HttpStatus.FORBIDDEN);
+        ApiError apiError = new ApiError("Access denied: Insufficient permissions"+ ex.getMessage(), HttpStatus.FORBIDDEN);
         return new ResponseEntity<>(apiError, HttpStatus.FORBIDDEN);
     }
 

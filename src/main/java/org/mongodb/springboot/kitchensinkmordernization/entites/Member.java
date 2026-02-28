@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jspecify.annotations.NullMarked;
 import org.mongodb.springboot.kitchensinkmordernization.enums.MemberRole;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,7 +15,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,6 +44,7 @@ public class Member implements UserDetails {
     private Set<MemberRole> role;
 
     @Override
+    @NullMarked
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return
                 role.stream()
@@ -52,6 +53,7 @@ public class Member implements UserDetails {
     }
 
     @Override
+    @NullMarked
     public String getUsername() {
         return name;
     }
