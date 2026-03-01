@@ -41,8 +41,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<ApiError> handleWriteConcernException(DuplicateKeyException ex) {
-        ApiError apiError = new ApiError("Duplicate data found. Name and email should be unique", HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+        ApiError apiError = new ApiError("Duplicate data found. Name and email should be unique", HttpStatus.CONFLICT);
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(ResponseStatusException.class)
