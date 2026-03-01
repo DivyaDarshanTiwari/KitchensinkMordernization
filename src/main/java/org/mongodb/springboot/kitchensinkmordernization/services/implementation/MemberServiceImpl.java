@@ -40,10 +40,4 @@ public class MemberServiceImpl implements MemberService {
                 .toList();
     }
 
-    public void createMember(MemberDTO memberDTO) {
-        Member member = mapperConfig.mapMemberDTOToMember(memberDTO);
-        Long sequence = sequenceGeneratorRepository.generateSequenceByName("members");
-        member.setId(sequence);
-        memberRepository.save(member);
-    }
 }

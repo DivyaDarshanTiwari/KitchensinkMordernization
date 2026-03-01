@@ -11,6 +11,4 @@ public interface MemberService {
     MemberDTO getMemberById(Long id);
 
     List<MemberDTO> findAllMembers();
-
-    void createMember(MemberDTO memberDTO);
 }
