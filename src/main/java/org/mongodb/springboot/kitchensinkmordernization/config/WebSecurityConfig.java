@@ -16,7 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+
+import java.util.Arrays;
 
 
 @Configuration
@@ -27,7 +32,7 @@ public class WebSecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
 
-    private final String[] whiteListedUrl ={
+    private final String[] whiteListedUrl = {
             "/auth/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
@@ -41,11 +46,16 @@ public class WebSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(cors -> cors
+                        .configurationSource(corsConfigurationSource())
+                )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(whiteListedUrl)
                         .permitAll()
-                        .requestMatchers("/members/{id}").hasAnyRole("MEMBER", "ADMIN")
-                        .requestMatchers("/members").hasRole("ADMIN")
+                        .requestMatchers("/members/{id}")
+                        .hasAnyRole("MEMBER", "ADMIN")
+                        .requestMatchers("/members")
+                        .hasRole("ADMIN")
                         .anyRequest()
                         .authenticated()
                 )
@@ -66,6 +76,18 @@ public class WebSecurityConfig {
     ) {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
 }
 
 
