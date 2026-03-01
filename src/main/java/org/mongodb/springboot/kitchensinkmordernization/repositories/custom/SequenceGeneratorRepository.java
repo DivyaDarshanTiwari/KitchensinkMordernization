@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @EnableMongoRepositories(basePackageClasses = SequenceGeneratorRepository.class)
 public interface SequenceGeneratorRepository {
-    public Long generateSequenceByName(String name);
+    Long generateSequenceByName(String name);
 }
