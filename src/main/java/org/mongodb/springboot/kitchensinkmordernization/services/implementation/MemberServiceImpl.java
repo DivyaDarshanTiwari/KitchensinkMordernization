@@ -5,7 +5,6 @@ import org.mongodb.springboot.kitchensinkmordernization.config.MapperConfig;
 import org.mongodb.springboot.kitchensinkmordernization.dto.MemberDTO;
 import org.mongodb.springboot.kitchensinkmordernization.entites.Member;
 import org.mongodb.springboot.kitchensinkmordernization.repositories.MemberRepository;
-import org.mongodb.springboot.kitchensinkmordernization.repositories.custom.SequenceGeneratorRepository;
 import org.mongodb.springboot.kitchensinkmordernization.services.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,6 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
-
-    private final SequenceGeneratorRepository sequenceGeneratorRepository;
 
     private final MapperConfig mapperConfig;
 
