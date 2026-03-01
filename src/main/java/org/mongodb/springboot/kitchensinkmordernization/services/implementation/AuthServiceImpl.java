@@ -39,13 +39,12 @@ public class AuthServiceImpl implements AuthService {
 
         assert member != null;
         String token = authUtil.generateJwtToken(member);
-        return new LoginResponseDto(token, member.getId() , member.getRole());
+        return new LoginResponseDto(token, member.getId(), member.getRole());
     }
 
     @Transactional
     public void signUp(MemberDTO memberDTO) {
         Member member = mapperConfig.mapMemberDTOToMember(memberDTO);
-
         Long sequence = sequenceGeneratorRepository.generateSequenceByName("members");
         member.setId(sequence);
         member.setPhoneNumber(memberDTO.getPhoneNumber());
