@@ -40,10 +40,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
 
             String authenticationToken = authenticationHeader.split("Bearer ")[1];
-            String username = authUtil.getUserNameFromToken(authenticationToken);
+            String email = authUtil.getEmailFromToken(authenticationToken);
             if (authenticationToken != null && SecurityContextHolder.getContext()
                     .getAuthentication() == null) {
-                UserDetails userDetails = memberRepository.findMemberByName(username);
+                UserDetails userDetails = memberRepository.findMemberByEmail(email);
                 UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext()
                         .setAuthentication(token);

@@ -21,17 +21,17 @@ public class AuthUtil {
 
     public String generateJwtToken(Member member) {
         return Jwts.builder()
-                .subject(member.getName())
+                .subject(member.getEmail())
                 .claim("userId ", member.getId()
                         .toString())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 10))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 *10))
                 .signWith(getJwtSecretKey())
                 .compact();
 
     }
 
-    public String getUserNameFromToken(String token) {
+    public String getEmailFromToken(String token) {
         return Jwts.parser()
                 .verifyWith(getJwtSecretKey())
                 .build()
