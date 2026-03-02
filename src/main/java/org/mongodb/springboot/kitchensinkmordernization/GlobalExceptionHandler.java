@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ApiError> handleAuthenticationException(AuthenticationException ex) {
-        ApiError apiError = new ApiError("Authentication failed: Check the username and password" , HttpStatus.UNAUTHORIZED);
+        ApiError apiError = new ApiError("Authentication failed: Check the Email and Password" , HttpStatus.UNAUTHORIZED);
         return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
     }
 
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<ApiError> handleWriteConcernException(DuplicateKeyException ex) {
-        ApiError apiError = new ApiError("Duplicate data found. Name and email should be unique", HttpStatus.CONFLICT);
+        ApiError apiError = new ApiError("Duplicate data found.Email should be unique", HttpStatus.CONFLICT);
         return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
     }
 
