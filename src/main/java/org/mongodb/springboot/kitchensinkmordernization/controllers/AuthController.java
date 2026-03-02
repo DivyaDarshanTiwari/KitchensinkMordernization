@@ -37,7 +37,7 @@ public class AuthController {
                             array = @ArraySchema(schema = @Schema(implementation = MemberDTO.class)))}),
     })
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> logic(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<LoginResponseDto> logic(@RequestBody @Valid LoginRequestDto loginRequestDto) {
         return ResponseEntity.ok(authService.login(loginRequestDto));
     }
 
