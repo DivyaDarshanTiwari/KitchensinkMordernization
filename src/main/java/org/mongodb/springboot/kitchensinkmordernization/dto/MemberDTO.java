@@ -16,7 +16,7 @@ public class MemberDTO {
 
     @NotBlank
     @Size(min = 1, max = 25)
-    @Pattern(regexp = "[a-zA-Z0-9_\\s]+", message = "Must not contain numbers")
+    @Pattern(regexp = "^\\D+$" , message = "Must  not contain a number")
     private String name;
 
     @NotBlank
@@ -24,11 +24,12 @@ public class MemberDTO {
     private String email;
 
     @NotBlank
-    @Size(min = 10, max = 12)
-    @Digits(fraction = 0, integer = 12)
+    @Size(min = 10, max = 12, message = "Phone number size must be between 10 and 12")
+    @Digits(fraction = 0, integer = 12, message = "Phone number should be a digit")
     private String phoneNumber;
 
     @NotBlank
     @Size(min = 8, message = "Password must be at least 8 characters long")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}", message = "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character")
     private String password;
 }
