@@ -3,14 +3,15 @@ package org.mongodb.springboot.kitchensinkmordernization.config;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mongodb.springboot.kitchensinkmordernization.dto.MemberDTO;
+import org.mongodb.springboot.kitchensinkmordernization.dto.MemberResponseDTO;
 import org.mongodb.springboot.kitchensinkmordernization.entites.Member;
 
 
 @Mapper(componentModel = "spring")
 public interface MapperConfig {
 
-    @Mapping(target="password",ignore = true)
-    MemberDTO mapMemberToMemberDTO(Member member);
+
+    MemberResponseDTO mapMemberToMemberResponseDTO(Member member);
 
     @Mapping(target="id",ignore = true)
     @Mapping(target="role",ignore = true)
