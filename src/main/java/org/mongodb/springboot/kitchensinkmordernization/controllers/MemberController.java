@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.mongodb.springboot.kitchensinkmordernization.dto.ApiError;
 import org.mongodb.springboot.kitchensinkmordernization.dto.MemberDTO;
+import org.mongodb.springboot.kitchensinkmordernization.dto.MemberResponseDTO;
 import org.mongodb.springboot.kitchensinkmordernization.services.MemberService;
 import org.springframework.http.ResponseEntity;
 
@@ -43,7 +44,7 @@ public class MemberController {
                             schema = @Schema(implementation = ApiError.class))})
     })
     @GetMapping("/{id}")
-    public ResponseEntity<MemberDTO> getMember(@PathVariable Long id) {
+    public ResponseEntity<MemberResponseDTO> getMember(@PathVariable Long id) {
         return ResponseEntity.ok(memberService.getMemberById(id));
     }
 
@@ -60,7 +61,7 @@ public class MemberController {
                             schema = @Schema(implementation = ApiError.class))})
     })
     @GetMapping
-    public List<MemberDTO> findAllMembers() {
+    public List<MemberResponseDTO> findAllMembers() {
         return memberService.findAllMembers();
     }
 

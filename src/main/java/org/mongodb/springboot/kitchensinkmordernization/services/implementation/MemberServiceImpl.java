@@ -2,7 +2,7 @@ package org.mongodb.springboot.kitchensinkmordernization.services.implementation
 
 import lombok.RequiredArgsConstructor;
 import org.mongodb.springboot.kitchensinkmordernization.config.MapperConfig;
-import org.mongodb.springboot.kitchensinkmordernization.dto.MemberDTO;
+import org.mongodb.springboot.kitchensinkmordernization.dto.MemberResponseDTO;
 import org.mongodb.springboot.kitchensinkmordernization.entites.Member;
 import org.mongodb.springboot.kitchensinkmordernization.repositories.MemberRepository;
 import org.mongodb.springboot.kitchensinkmordernization.services.MemberService;
@@ -20,20 +20,20 @@ public class MemberServiceImpl implements MemberService {
 
     private final MapperConfig mapperConfig;
 
-    public MemberDTO getMemberById(Long id) {
+    public MemberResponseDTO getMemberById(Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "The following member related to id: " + id + " was not found"
                 ));
-        return mapperConfig.mapMemberToMemberDTO(member);
+        return mapperConfig.mapMemberToMemberResponseDTO(member);
     }
 
 
-    public List<MemberDTO> findAllMembers() {
+    public List<MemberResponseDTO> findAllMembers() {
         return memberRepository.findAll()
                 .stream()
-                .map(mapperConfig::mapMemberToMemberDTO)
+                .map(mapperConfig::mapMemberToMemberResponseDTO)
                 .toList();
     }
 

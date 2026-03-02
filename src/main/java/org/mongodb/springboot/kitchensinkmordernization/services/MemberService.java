@@ -1,14 +1,14 @@
 package org.mongodb.springboot.kitchensinkmordernization.services;
 
 
-import org.mongodb.springboot.kitchensinkmordernization.dto.MemberDTO;
+import org.mongodb.springboot.kitchensinkmordernization.dto.MemberResponseDTO;
 
 
 import java.util.List;
 
 public interface MemberService {
 
-    MemberDTO getMemberById(Long id);
+    MemberResponseDTO getMemberById(Long id);
 
-    List<MemberDTO> findAllMembers();
+    List<MemberResponseDTO> findAllMembers();
 }
