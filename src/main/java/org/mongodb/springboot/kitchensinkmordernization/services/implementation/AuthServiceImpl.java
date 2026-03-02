@@ -34,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail().toLowerCase(), loginRequestDto.getPassword()));
         Member member = (Member) authentication.getPrincipal();
 
         assert member != null;
@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
         Member member = mapperConfig.mapMemberDTOToMember(memberDTO);
         Long sequence = sequenceGeneratorRepository.generateSequenceByName("members");
         member.setId(sequence);
-        member.setPhoneNumber(memberDTO.getPhoneNumber());
+        member.setEmail(memberDTO.getEmail().toLowerCase());
         member.setRole(Set.of(MemberRole.MEMBER));
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         memberRepository.save(member);
