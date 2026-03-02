@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDTO {
+
+    private Long id;
+
     @NotBlank
     @Size(min = 1, max = 25)
     @Pattern(regexp = "[a-zA-Z0-9_\\s]+", message = "Must not contain numbers")
