@@ -20,7 +20,9 @@ import org.mongodb.springboot.kitchensinkmordernization.services.implementation.
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Set;
 
@@ -79,8 +81,7 @@ class AuthServiceImplTest {
     class SignUpTestCases {
 
         @Test
-        @DisplayName("SignUp Successfully with correct Data being sent")
-        void testSignUp() {
+        void testSignUp_WithCorrectDataBeingSent() {
             when(mapperConfig.mapMemberDTOToMember(memberDTO)).thenReturn(member);
             when(sequenceGeneratorRepository.generateSequenceByName("members")).thenReturn(1L);
             when(passwordEncoder.encode(member.getPassword())).thenReturn("");
@@ -106,8 +107,7 @@ class AuthServiceImplTest {
     class LoginTestCases {
 
         @Test
-        @DisplayName("Test for login When correct details are entered")
-        void testLogin() {
+        void testLogin_ValidDetails() {
             Authentication authentication = Mockito.mock(Authentication.class);
             when(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(),loginRequestDto.getPassword()))).thenReturn(authentication);
             when(authentication.getPrincipal()).thenReturn(member);
@@ -117,6 +117,19 @@ class AuthServiceImplTest {
 
             Assertions.assertNotNull(responseDto);
             Assertions.assertEquals(loginResponseDTO, responseDto);
+        }
+        @Test
+        void testLogin_MemberReturnedByPrincipleIsNull() {
+            Authentication authentication = Mockito.mock(Authentication.class);
+            when(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(),loginRequestDto.getPassword()))).thenReturn(authentication);
+            when(authentication.getPrincipal()).thenReturn(null);
+
+            UsernameNotFoundException exception = assertThrows(
+                    UsernameNotFoundException.class,
+                    () -> authService.login(loginRequestDto)
+            );
+            Assertions.assertNotNull(exception);
+
         }
     }
 }
