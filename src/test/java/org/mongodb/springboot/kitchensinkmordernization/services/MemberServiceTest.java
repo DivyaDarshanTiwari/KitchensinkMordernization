@@ -1,21 +1,22 @@
 package org.mongodb.springboot.kitchensinkmordernization.services;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.mongodb.springboot.kitchensinkmordernization.config.MapperConfig;
 import org.mongodb.springboot.kitchensinkmordernization.dto.MemberResponseDTO;
 import org.mongodb.springboot.kitchensinkmordernization.entites.Member;
 import org.mongodb.springboot.kitchensinkmordernization.enums.MemberRole;
 import org.mongodb.springboot.kitchensinkmordernization.repositories.MemberRepository;
 import org.mongodb.springboot.kitchensinkmordernization.services.implementation.MemberServiceImpl;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -65,38 +66,66 @@ class MemberServiceTest {
 
     }
 
-    @Test
-    @DisplayName("Find Member By ID")
-    void getMemberById() {
-        //Given
-        when(memberRepository.findById(memberId)).thenReturn(Optional.of(member));
-        when(mapperConfig.mapMemberToMemberResponseDTO(member)).thenReturn(memberResponseDTO);
+    @Nested
+    @DisplayName("All the test for findById")
+    class GetMemberByIdClass {
+        @Test
+        void getMemberById_Valid_Id() {
+            //Given
+            when(memberRepository.findById(memberId)).thenReturn(Optional.of(member));
+            when(mapperConfig.mapMemberToMemberResponseDTO(member)).thenReturn(memberResponseDTO);
 
-        //When
-        MemberResponseDTO responseDTO = memberService.getMemberById(memberId);
+            //When
+            MemberResponseDTO responseDTO = memberService.getMemberById(memberId);
 
-        //then
+            //then
 
-        Assertions.assertEquals(responseDTO, memberResponseDTO);
-        Mockito.verify(memberRepository, Mockito.times(1))
-                .findById(memberId);
-    }
+            Assertions.assertEquals(responseDTO, memberResponseDTO);
+            Mockito.verify(memberRepository, Mockito.times(1))
+                    .findById(memberId);
+        }
 
-    @Test
-    @DisplayName("Find all the Members")
-    void findAllMembers() {
-        //Given
-        List<Member> membersList = List.of(member);
-        when(memberRepository.findAll()).thenReturn(membersList);
-        when(mapperConfig.mapMemberToMemberResponseDTO(member)).thenReturn(memberResponseDTO);
+        @Test
+        void getMemberById_Invalid_Id() {
+            assertThatThrownBy(() -> memberService.getMemberById(2L)).isInstanceOf(ResponseStatusException.class);
 
-
-        log.info("Find all the Members");
-        //When
-        List<MemberResponseDTO> responseDTOList = memberService.findAllMembers();
-        //then
-
-        Assertions.assertEquals(memberResponseDTOList, responseDTOList);
+        }
 
     }
+
+
+    @Nested
+    @DisplayName("All the test for findAll")
+    class FindAllMembersClass {
+        @Test
+        void findAllMembers_whenDataIsPresent() {
+            //Given
+            List<Member> membersList = List.of(member);
+            when(memberRepository.findAll()).thenReturn(membersList);
+            when(mapperConfig.mapMemberToMemberResponseDTO(member)).thenReturn(memberResponseDTO);
+
+            //When
+            List<MemberResponseDTO> responseDTOList = memberService.findAllMembers();
+
+            //then
+            Assertions.assertEquals(memberResponseDTOList, responseDTOList);
+
+        }
+
+        @Test
+        void findAllMembers_whenDataIsNotPresent() {
+            //Given
+            List<Member> emptyMembersList = List.of();
+            when(memberRepository.findAll()).thenReturn(emptyMembersList);
+            //When
+            List<MemberResponseDTO> responseDTOList = memberService.findAllMembers();
+
+            //then
+            Assertions.assertIterableEquals(emptyMembersList, responseDTOList);
+
+        }
+
+    }
+
+
 }
