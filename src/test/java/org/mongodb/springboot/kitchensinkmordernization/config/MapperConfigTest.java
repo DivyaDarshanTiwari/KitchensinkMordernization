@@ -12,13 +12,12 @@ import org.mongodb.springboot.kitchensinkmordernization.enums.MemberRole;
 import java.util.Set;
 
 @ExtendWith(MockitoExtension.class)
-
 class MapperConfigTest {
 
     private final MapperConfig mapperConfig = Mappers.getMapper(MapperConfig.class);
 
-    private final Member member = Member.builder().id(1L).name("Vyom").email("d@gmail.com").phoneNumber("1111111111").password("Hello").role(Set.of(MemberRole.MEMBER)).build();
-    private final MemberResponseDTO memberResponseDTO = MemberResponseDTO.builder().id(1L).name("Divya").email("d@gmail.com").phoneNumber("1111111111").build();
+    private final Member member = Member.builder().name("Divya").email("d@gmail.com").phoneNumber("1111111111").password("Hello").role(Set.of(MemberRole.MEMBER)).build();
+    private final MemberResponseDTO memberResponseDTO = MemberResponseDTO.builder().name("Divya").email("d@gmail.com").phoneNumber("1111111111").build();
 
     @Test
     void mapMemberToMemberResponseDTO() {
