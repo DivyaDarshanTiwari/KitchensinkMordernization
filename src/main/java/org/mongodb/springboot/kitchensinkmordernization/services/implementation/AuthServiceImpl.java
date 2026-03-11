@@ -31,6 +31,7 @@ public class AuthServiceImpl implements AuthService {
     private final MapperConfig mapperConfig;
     private final SequenceGeneratorRepository sequenceGeneratorRepository;
     private final MemberRepository memberRepository;
+    private final TokenBlacklistServiceImpl tokenBlacklistService;
 
     @Override
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
@@ -56,5 +57,14 @@ public class AuthServiceImpl implements AuthService {
         memberRepository.save(member);
     }
 
+
+    public void logout(String token) {
+        // Add the token to the blacklist
+        tokenBlacklistService.blacklistToken(token);
+    }
+
+    public boolean isTokenBlacklisted(String token) {
+        return tokenBlacklistService.isBlacklisted(token);
+    }
 
 }

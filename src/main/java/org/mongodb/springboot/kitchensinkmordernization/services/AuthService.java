@@ -9,4 +9,7 @@ import org.springframework.stereotype.Service;
 public interface AuthService {
     LoginResponseDto login(LoginRequestDto loginRequestDto);
     void signUp(MemberDTO memberDTO);
+
+    void logout(String token);
+    boolean isTokenBlacklisted(String token);
 }

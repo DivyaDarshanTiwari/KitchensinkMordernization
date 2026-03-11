@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.mongodb.springboot.kitchensinkmordernization.dto.ApiError;
@@ -15,10 +16,8 @@ import org.mongodb.springboot.kitchensinkmordernization.dto.LoginResponseDto;
 import org.mongodb.springboot.kitchensinkmordernization.dto.MemberDTO;
 import org.mongodb.springboot.kitchensinkmordernization.services.AuthService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -55,6 +54,21 @@ public class AuthController {
         authService.signUp(memberDTO);
         return ResponseEntity.ok()
                 .build();
+    }
+
+    @PostMapping("/logout")
+    @Operation(summary = "logout user", description = "Log out the user and make the token blacklisted, so that further request cant be made with that token")
+    public ResponseEntity<Void> logout(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+
+        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            authService.logout(token); // Send token to be blacklisted
+
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 
 }

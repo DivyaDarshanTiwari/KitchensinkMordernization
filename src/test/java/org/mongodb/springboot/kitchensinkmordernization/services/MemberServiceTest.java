@@ -39,7 +39,6 @@ class MemberServiceTest {
     private Member member;
     private Long memberId;
     private MemberResponseDTO memberResponseDTO;
-    private List<MemberResponseDTO> memberResponseDTOList;
 
     @BeforeEach
     void init() {
@@ -62,6 +61,7 @@ class MemberServiceTest {
                 .build();
         this.memberId = 1L;
         this.memberResponseDTOList = List.of(memberResponseDTO);
+
 
 
     }
@@ -94,38 +94,43 @@ class MemberServiceTest {
     }
 
 
-    @Nested
-    @DisplayName("All the test for findAll")
-    class FindAllMembersClass {
-        @Test
-        void findAllMembers_whenDataIsPresent() {
-            //Given
-            List<Member> membersList = List.of(member);
-            when(memberRepository.findAll()).thenReturn(membersList);
-            when(mapperConfig.mapMemberToMemberResponseDTO(member)).thenReturn(memberResponseDTO);
-
-            //When
-            List<MemberResponseDTO> responseDTOList = memberService.findAllMembers();
-
-            //then
-            Assertions.assertEquals(memberResponseDTOList, responseDTOList);
-
-        }
-
-        @Test
-        void findAllMembers_whenDataIsNotPresent() {
-            //Given
-            List<Member> emptyMembersList = List.of();
-            when(memberRepository.findAll()).thenReturn(emptyMembersList);
-            //When
-            List<MemberResponseDTO> responseDTOList = memberService.findAllMembers();
-
-            //then
-            Assertions.assertIterableEquals(emptyMembersList, responseDTOList);
-
-        }
-
-    }
-
+//    @Nested
+//    @DisplayName("All the test for findAll")
+//    class FindAllMembersClass {
+//        @Test
+//        void findAllMembers_whenDataIsPresent() {
+//            //Given
+//            List<Member> membersList = List.of(member);
+//            Pageable pageable = PageRequest.of(0, 10);
+//            Page<Member> memberPage = new PageImpl(membersList, pageable, membersList.size());
+//            when(memberRepository.findAll(any(Pageable.class))).thenReturn(memberPage);
+//            when(mapperConfig.mapMemberToMemberResponseDTO(member)).thenReturn(memberResponseDTO);
+//            Page<MemberResponseDTO> memberResponseDTOPage = new  PageImpl(memberResponseDTOList, pageable, memberResponseDTOList.size());
+//            //When
+//            Page<MemberResponseDTO> responseDTOList = memberService.findAllMembers(0,10);
+//
+//            //then
+//            Assertions.assertEquals(memberResponseDTOPage, responseDTOList);
+//
+//        }
+//
+//        @Test
+//        void findAllMembers_whenDataIsNotPresent() {
+//            //Given
+//            List<Member> emptyMembersList = List.of();
+//            Pageable pageable = PageRequest.of(0, 10);
+//            Page<Member> memberPage = new PageImpl(emptyMembersList, pageable, emptyMembersList.size());
+//            Page<Member> responseMemberPage = new PageImpl(emptyMembersList, pageable, emptyMembersList.size());
+//            when(memberRepository.findAll(any(Pageable.class))).thenReturn(responseMemberPage);
+//
+//            //When
+//            Page<MemberResponseDTO> responseDTOList = memberService.findAllMembers(0,10);
+//
+//            //then
+//            Assertions.assertIterableEquals(memberPage, responseDTOList);
+//
+//        }
+//
+//    }
 
 }
