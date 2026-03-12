@@ -116,9 +116,6 @@ public class MemberServiceImpl implements MemberService {
                     .toString();
             case "name" -> member.getName();
             case "email" -> member.getEmail();
-            case "role" -> member.getRole()
-                    .toString();
-            case "phoneNumber" -> member.getPhoneNumber();
             default -> member.getId()
                     .toString();
         };
