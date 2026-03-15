@@ -8,21 +8,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
-import org.mongodb.springboot.kitchensinkmordernization.repositories.MemberRepository;
-import org.mongodb.springboot.kitchensinkmordernization.services.AuthService;
 import org.mongodb.springboot.kitchensinkmordernization.services.implementation.TokenBlacklistServiceImpl;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.util.Collection;
-import java.util.List;
 
 
 @Component
