@@ -59,12 +59,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     public void logout(String token) {
-        // Add the token to the blacklist
         tokenBlacklistService.blacklistToken(token);
-    }
-
-    public boolean isTokenBlacklisted(String token) {
-        return tokenBlacklistService.isBlacklisted(token);
     }
 
 }
