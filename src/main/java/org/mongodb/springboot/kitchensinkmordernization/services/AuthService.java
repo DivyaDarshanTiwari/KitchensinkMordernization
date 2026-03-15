@@ -11,5 +11,4 @@ public interface AuthService {
     void signUp(MemberDTO memberDTO);
 
     void logout(String token);
-    boolean isTokenBlacklisted(String token);
 }
