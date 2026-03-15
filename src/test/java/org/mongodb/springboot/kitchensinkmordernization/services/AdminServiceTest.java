@@ -1,4 +1,4 @@
-package org.mongodb.springboot.kitchensinkmordernization.services.implementation;
+package org.mongodb.springboot.kitchensinkmordernization.services;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +16,7 @@ import org.mongodb.springboot.kitchensinkmordernization.entites.Member;
 import org.mongodb.springboot.kitchensinkmordernization.enums.MemberRole;
 import org.mongodb.springboot.kitchensinkmordernization.repositories.MemberRepository;
 import org.mongodb.springboot.kitchensinkmordernization.repositories.custom.SequenceGeneratorRepository;
+import org.mongodb.springboot.kitchensinkmordernization.services.implementation.AdminServiceImpl;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,7 +27,7 @@ import java.util.Set;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class AdminServiceImplTest {
+class AdminServiceTest {
 
     @Spy
     private MapperConfig mapperConfig = Mappers.getMapper(MapperConfig.class);
