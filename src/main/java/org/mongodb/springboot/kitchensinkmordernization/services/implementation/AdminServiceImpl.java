@@ -58,7 +58,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Transactional
-    public void signUp(AdminMemberDto memberDTO) {
+    public void signUp(AdminMemberDto memberDTO) { //So tha the role can be assigned by the admin
         Member member = mapperConfig.mapAdminMemberDtoToMember(memberDTO);
         Long sequence = sequenceGeneratorRepository.generateSequenceByName("members");
         member.setId(sequence);
