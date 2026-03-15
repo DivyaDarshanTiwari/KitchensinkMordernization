@@ -39,6 +39,7 @@ class MemberServiceTest {
     private Member member;
     private Long memberId;
     private MemberResponseDTO memberResponseDTO;
+    private List<MemberResponseDTO> memberResponseDTOList;
 
     @BeforeEach
     void init() {
@@ -71,14 +72,10 @@ class MemberServiceTest {
     class GetMemberByIdClass {
         @Test
         void getMemberById_Valid_Id() {
-            //Given
             when(memberRepository.findById(memberId)).thenReturn(Optional.of(member));
             when(mapperConfig.mapMemberToMemberResponseDTO(member)).thenReturn(memberResponseDTO);
 
-            //When
             MemberResponseDTO responseDTO = memberService.getMemberById(memberId);
-
-            //then
 
             Assertions.assertEquals(responseDTO, memberResponseDTO);
             Mockito.verify(memberRepository, Mockito.times(1))
