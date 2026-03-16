@@ -56,7 +56,7 @@ public class AuthController {
                 .build();
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     @Operation(summary = "logout user", description = "Log out the user and make the token blacklisted, so that further request cant be made with that token")
     public ResponseEntity<Void> logout(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
